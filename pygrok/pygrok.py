@@ -29,13 +29,13 @@ class Grok(object):
         py_regex_pattern = pattern
         while True:
             # Finding all types specified in the groks
-            m = re.findall(r'%{(\w+):(\w+):(\w+)}', py_regex_pattern)
+            m = re.findall(r'%{(\w+):(\w+);(\w+)}', py_regex_pattern)
             for n in m:
                 self.type_mapper[n[1]] = n[2]
             #replace %{pattern_name:custom_name} (or %{pattern_name:custom_name:type}
             # with regex and regex group name
 
-            py_regex_pattern = re.sub(r'%{(\w+):(\w+)(?::\w+)?}',
+            py_regex_pattern = re.sub(r'%{(\w+):(\w+)(?:;\w+)?}',
                 lambda m: "(?P<" + m.group(2) + ">" + self.predefined_patterns[m.group(1)].regex_str + ")",
                 py_regex_pattern)
 
